@@ -44,7 +44,7 @@ public class CategoriesController {
     private void setupCategoriesList() {
 
         categoriesList.setCellFactory(
-                listView -> new CategoryListCell(categoriesService, this::refreshCategories)
+                listView -> new CategoryListCell(categoriesService, this::refreshCategories, dashboardController)
         );
     }
 
@@ -67,7 +67,7 @@ public class CategoriesController {
     }
 
     public void handleOpenCategoryModal() {
-        dashboardController.openCategoryModal();
+        dashboardController.openCategoryModal(null);
     }
 
 

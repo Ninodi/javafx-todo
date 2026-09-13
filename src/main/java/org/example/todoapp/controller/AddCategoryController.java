@@ -4,13 +4,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.example.todoapp.database.CategoriesService;
+import org.example.todoapp.model.Category;
 
 public class AddCategoryController {
     private Runnable onClose;
     private CategoriesService categoriesService;
     private Runnable onCategoryCreated;
+    private Category category;
 
     public void setOnCategoryCreated(Runnable onCategoryCreated) {
         this.onCategoryCreated = onCategoryCreated;
@@ -32,11 +35,22 @@ public class AddCategoryController {
         String color = colorPicker.getValue().toString();
 
         try {
-            categoriesService.createCategory(title, color);
+            if (category == null) {
+                // CREATE
+                categoriesService.createCategory(title, color);
+            } else {
+                // EDIT
+                categoriesService.updateCategory(
+                        category.getId(),
+                        title,
+                        color
+                );
+            }
 
             if (onCategoryCreated != null) {
                 onCategoryCreated.run();
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -51,5 +65,11 @@ public class AddCategoryController {
         if (onClose != null) {
             onClose.run();
         }
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+        titleField.setText(category.getTitle());
+        colorPicker.setValue(Color.web(category.getColor()));
     }
 }

@@ -7,12 +7,14 @@ import org.example.todoapp.model.Category;
 import org.example.todoapp.model.Todo;
 import org.example.todoapp.navigation.AppRouter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriesService {
     private final FirestoreClient firestoreClient;
     private final AuthSession session;
+    private String editCategoryId;
 
     public CategoriesService(AuthSession session) {
         this.firestoreClient =
@@ -91,6 +93,32 @@ public class CategoriesService {
     public void deleteCategory(String id) throws Exception {
         firestoreClient.delete(
                 getCategoriesPath() + "/" + id
+        );
+    }
+
+    public void setEditCategoryId (String editCategoryId) {
+        this.editCategoryId = editCategoryId;
+    }
+
+    public void updateCategory(String id, String title, String color)
+            throws IOException, InterruptedException {
+
+        String body = String.format("""
+    {
+      "fields": {
+        "title": {
+          "stringValue": "%s"
+        },
+        "color": {
+          "stringValue": "%s"
+        }
+      }
+    }
+    """, title, color);
+
+        firestoreClient.patch(
+                getCategoriesPath() + "/" + id,
+                body
         );
     }
 }

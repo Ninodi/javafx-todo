@@ -229,6 +229,23 @@
     -fx-cursor: hand;
 }
 
+.edit-category-button {
+    -fx-background-color: #fff;
+    -fx-border-color: #5558e8;
+    -fx-border-size: 1px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+
+    -fx-min-width: 34px;
+    -fx-min-height: 34px;
+    -fx-pref-width: 34px;
+    -fx-pref-height: 34px;
+
+    -fx-padding: 0;
+
+    -fx-cursor: hand;
+}
+
 
 /* Trash icon */
 .delete-category-button .ikonli-font-icon {

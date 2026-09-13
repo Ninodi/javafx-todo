@@ -11,6 +11,7 @@ import org.example.todoapp.navigation.AppRouter;
 
 public class CategoryItemController {
     private CategoriesService categoriesService;
+    private DashboardController dashboardController;
     private Runnable onDelete;
     @FXML
     private Circle colorCircle;
@@ -25,8 +26,11 @@ public class CategoryItemController {
         this.categoriesService = categoriesService;
     }
 
-    public void setCategory(Category category) {
+    public void setDashboardController (DashboardController dashboardController) {
+        this.dashboardController = dashboardController;
+    }
 
+    public void setCategory(Category category) {
         this.category = category;
         this.categoryId = category.getId();
 
@@ -42,6 +46,7 @@ public class CategoryItemController {
     public void setOnDelete(Runnable onDelete) {
         this.onDelete = onDelete;
     }
+
     @FXML
     public void handleDelete(ActionEvent actionEvent) {
         try {
@@ -52,5 +57,10 @@ public class CategoryItemController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @FXML
+    public void handleEditMode(ActionEvent actionEvent) {
+        dashboardController.openCategoryModal(category);
     }
 }

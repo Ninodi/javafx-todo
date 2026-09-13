@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 import org.example.todoapp.controller.CategoryItemController;
+import org.example.todoapp.controller.DashboardController;
 import org.example.todoapp.database.CategoriesService;
 import org.example.todoapp.model.Category;
 
@@ -15,7 +16,7 @@ public class CategoryListCell extends ListCell<Category> {
 
     private CategoryItemController controller;
 
-    public CategoryListCell(CategoriesService categoriesService, Runnable onDelete) {
+    public CategoryListCell(CategoriesService categoriesService, Runnable onDelete, DashboardController dashboardController) {
         try {
 
             FXMLLoader loader = new FXMLLoader(
@@ -28,6 +29,7 @@ public class CategoryListCell extends ListCell<Category> {
 
             controller = loader.getController();
             controller.setCategoriesService(categoriesService);
+            controller.setDashboardController(dashboardController);
             controller.setOnDelete(onDelete);
 
 

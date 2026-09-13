@@ -37,6 +37,17 @@
 
     <!-- DELETE BUTTON -->
     <Button
+            fx:id="editButton"
+            onAction="#handleEditMode"
+            styleClass="edit-category-button">
+
+        <graphic>
+            <FontIcon iconLiteral="fas-edit"/>
+        </graphic>
+
+    </Button>
+
+    <Button
             fx:id="deleteButton"
             onAction="#handleDelete"
             styleClass="delete-category-button">

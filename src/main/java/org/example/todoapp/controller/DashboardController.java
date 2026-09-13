@@ -12,6 +12,7 @@ import org.example.todoapp.auth.AuthManager;
 import javafx.scene.control.Button;
 import org.example.todoapp.database.CategoriesService;
 import org.example.todoapp.database.TodoService;
+import org.example.todoapp.model.Category;
 import org.example.todoapp.navigation.AppPage;
 import org.example.todoapp.navigation.AppRouter;
 import java.util.List;
@@ -142,7 +143,7 @@ public class DashboardController {
     }
 
     @FXML
-    public void openCategoryModal() {
+    public void openCategoryModal(Category category) {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/todoapp/ui/AddCategoryView.fxml")
@@ -153,6 +154,10 @@ public class DashboardController {
             AddCategoryController controller = loader.getController();
 
             controller.setCategoriesService(categoriesService);
+            if (category != null) {
+                controller.setCategory(category);
+            }
+
 
             controller.setOnCategoryCreated(() -> {
                 showCategories();
