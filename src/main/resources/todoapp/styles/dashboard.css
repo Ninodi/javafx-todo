@@ -177,3 +177,7 @@
     -fx-icon-size: 20px;
     -fx-icon-color: white;
 }
+
+.modal-overlay {
+    -fx-background-color: rgba(0, 0, 0, 0.4);
+}

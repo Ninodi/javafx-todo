@@ -233,5 +233,5 @@
     <StackPane
             fx:id="modalContainer"
             visible="false"
-            styleClass="modal-container"/>
+            styleClass="modal-overlay"/>
 </StackPane>

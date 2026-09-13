@@ -3,6 +3,9 @@
    ========================================= */
 
 .category-modal {
+    -fx-pref-width: 350px;
+    -fx-max-height: 350px;
+    -fx-max-width: 350px;
     -fx-background-color: white;
 
     -fx-background-radius: 18px;
@@ -166,9 +169,4 @@
 
 .create-btn:pressed {
     -fx-background-color: #4f51d8;
-}
-
-.modal-container{
-    -fx-pref-width: 500px;
-    -fx-pref-height: 500px;
 }

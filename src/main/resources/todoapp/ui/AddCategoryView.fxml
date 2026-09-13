@@ -13,7 +13,6 @@
         xmlns:fx="http://javafx.com/fxml"
         fx:controller="org.example.todoapp.controller.AddCategoryController"
         spacing="18"
-        prefWidth="400"
         stylesheets="@../styles/categories.css"
         styleClass="category-modal">
 
