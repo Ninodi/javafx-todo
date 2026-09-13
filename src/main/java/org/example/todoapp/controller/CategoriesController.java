@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import org.example.todoapp.database.CategoriesService;
 import org.example.todoapp.model.Category;
 import org.example.todoapp.navigation.AppRouter;
+import org.example.todoapp.ui.CategoryListCell;
 
 import java.util.List;
 
@@ -42,23 +43,9 @@ public class CategoriesController {
 
     private void setupCategoriesList() {
 
-        categoriesList.setCellFactory(lis -> new ListCell<>() {
-
-            @Override
-            protected void updateItem(
-                    Category category,
-                    boolean empty
-            ) {
-
-                super.updateItem(category, empty);
-
-                if (empty || category == null) {
-                    setText(null);
-                } else {
-                    setText(category.getTitle());
-                }
-            }
-        });
+        categoriesList.setCellFactory(
+                listView -> new CategoryListCell(categoriesService, this::refreshCategories)
+        );
     }
 
 
@@ -84,6 +71,8 @@ public class CategoriesController {
     }
 
 
-
+    public void refreshCategories() {
+        loadCategories();
+    }
 
 }

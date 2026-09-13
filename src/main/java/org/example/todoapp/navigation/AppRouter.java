@@ -80,7 +80,6 @@ public class AppRouter {
         } else if (controller instanceof AddTodoController addTodoController) {
             addTodoController.setRouter(this);
             addTodoController.setTodoService(todoService);
-
         }
     }
 

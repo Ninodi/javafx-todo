@@ -170,3 +170,110 @@
 .create-btn:pressed {
     -fx-background-color: #4f51d8;
 }
+
+
+/*Category Item*/
+/* ================================
+   CATEGORY ITEM
+   ================================ */
+
+.category-item {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12px;
+    -fx-border-color: #e8e8ed;
+    -fx-border-width: 1px;
+    -fx-border-radius: 12px;
+
+    -fx-padding: 12px 14px;
+
+    /* Gives each item some breathing room */
+    -fx-min-height: 52px;
+}
+
+
+/* ================================
+   CATEGORY COLOR
+   ================================ */
+
+.category-color {
+    -fx-stroke: transparent;
+}
+
+
+/* ================================
+   CATEGORY NAME
+   ================================ */
+
+.category-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #2d2d35;
+}
+
+
+/* ================================
+   DELETE BUTTON
+   ================================ */
+
+.delete-category-button {
+    -fx-background-color: #ef4444;
+    -fx-background-radius: 8px;
+
+    -fx-min-width: 34px;
+    -fx-min-height: 34px;
+    -fx-pref-width: 34px;
+    -fx-pref-height: 34px;
+
+    -fx-padding: 0;
+
+    -fx-cursor: hand;
+}
+
+
+/* Trash icon */
+.delete-category-button .ikonli-font-icon {
+    -fx-icon-color: white;
+    -fx-icon-size: 14px;
+}
+
+
+/* Hover */
+.delete-category-button:hover {
+    -fx-background-color: #dc2626;
+}
+
+
+/* Pressed */
+.delete-category-button:pressed {
+    -fx-background-color: #b91c1c;
+}
+
+
+/* Keyboard focus */
+.delete-category-button:focused {
+    -fx-border-color: #fca5a5;
+    -fx-border-width: 2px;
+    -fx-border-radius: 8px;
+}
+
+
+/*listView styles*/
+.categories-list {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 4px;
+}
+
+.categories-list .viewport {
+    -fx-background-color: transparent;
+}
+
+.categories-list .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 5px 0;
+}
+
+.categories-list .list-cell:filled:selected,
+.categories-list .list-cell:filled:hover {
+    -fx-background-color: transparent;
+}

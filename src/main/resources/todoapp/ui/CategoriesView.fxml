@@ -72,6 +72,8 @@
 
 <!--    </ScrollPane>-->
 
-    <ListView fx:id="categoriesList"/>
+    <ListView
+            fx:id="categoriesList"
+            styleClass="categories-list"/>
 
 </VBox>

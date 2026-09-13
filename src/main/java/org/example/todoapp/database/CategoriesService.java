@@ -87,4 +87,10 @@ public class CategoriesService {
         return categories;
 
     }
+
+    public void deleteCategory(String id) throws Exception {
+        firestoreClient.delete(
+                getCategoriesPath() + "/" + id
+        );
+    }
 }
