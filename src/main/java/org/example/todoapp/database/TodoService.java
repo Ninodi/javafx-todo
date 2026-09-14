@@ -5,10 +5,11 @@ import org.example.todoapp.auth.AuthSession;
 import org.example.todoapp.model.Todo;
 
 import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TodoService {
 
@@ -28,29 +29,63 @@ public class TodoService {
                 + "/todos";
     }
 
-    public void createTodo(String title, String description, LocalDate date) throws Exception {
-        String formattedDate = "";
+    public void createTodo(
+            String title,
+            String description,
+            LocalDate date,
+            List<String> categoryIds
+    ) throws Exception {
+
+        String categoryIdsJson =
+                buildCategoryIdsJson(categoryIds);
+
+        String dueDateJson = "";
 
         if (date != null) {
-            // Convert LocalDate to standard ISO-8601 Timestamp format at Midnight UTC
-            // This yields: "2026-09-09T00:00:00.000Z"
-            formattedDate = date.atStartOfDay()
-                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
+
+            String formattedDate = date
+                    .atStartOfDay(ZoneOffset.UTC)
+                    .toInstant()
+                    .toString();
+
+            dueDateJson = """
+                "dueDate": {
+                    "timestampValue": "%s"
+                },
+                """.formatted(formattedDate);
         }
 
-        String body = String.format(
-                "{\n" +
-                        "  \"fields\": {\n" +
-                        "    \"title\": { \"stringValue\": \"%s\" },\n" +
-                        "    \"description\": { \"stringValue\": \"%s\" },\n" +
-                        "    \"dueDate\": { \"timestampValue\": \"%s\" },\n" +
-                        "    \"completed\": { \"booleanValue\": false }\n" +
-                        "  }\n" +
-                        "}",
-                title, description, formattedDate
+
+        String body = """
+            {
+              "fields": {
+                "title": {
+                  "stringValue": "%s"
+                },
+                "description": {
+                  "stringValue": "%s"
+                },
+                %s
+                "completed": {
+                  "booleanValue": false
+                },
+                "categoryIds": {
+                  "arrayValue": {
+                    "values": [
+                      %s
+                    ]
+                  }
+                }
+              }
+            }
+            """.formatted(
+                title,
+                description,
+                dueDateJson,
+                categoryIdsJson
         );
 
-        JsonNode response = firestoreClient.post(getTodosPath(), body);
+        firestoreClient.post(getTodosPath(), body);
     }
 
     public void testCreateTodo()
@@ -145,5 +180,20 @@ public class TodoService {
         }
 
         return todos;
+    }
+
+    //HELPER METHOD FOR GETTING CATEGORY IDs
+    private String buildCategoryIdsJson(
+            List<String> categoryIds
+    ) {
+
+        return categoryIds.stream()
+                .map(id ->
+                        String.format(
+                                "{ \"stringValue\": \"%s\" }",
+                                id
+                        )
+                )
+                .collect(Collectors.joining(","));
     }
 }

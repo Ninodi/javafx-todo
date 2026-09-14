@@ -4,105 +4,141 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox
+<?import javafx.scene.control.MenuButton?>
+
+<ScrollPane
         xmlns="http://javafx.com/javafx"
         xmlns:fx="http://javafx.com/fxml"
         fx:controller="org.example.todoapp.controller.AddTodoController"
-        spacing="25"
-        stylesheets="@../styles/add-todo.css"
-        styleClass="add-todo-page">
+        fitToWidth="true"
+        hbarPolicy="NEVER"
+        styleClass="add-todo-scroll">
 
-    <padding>
-        <Insets top="30" right="40" bottom="40" left="40"/>
-    </padding>
+    <content>
 
-    <!-- Header -->
-    <HBox
-            spacing="15"
-            alignment="CENTER_LEFT"
-            styleClass="form-header">
+        <VBox
+                spacing="25"
+                stylesheets="@../styles/add-todo.css"
+                styleClass="add-todo-page">
 
-        <Button
-                text="←"
-                onAction="#handleBack"
-                styleClass="back-button"/>
+            <padding>
+                <Insets top="30" right="40" bottom="40" left="40"/>
+            </padding>
 
-        <VBox spacing="3">
-            <Label
-                    text="Add Todo"
-                    styleClass="page-title"/>
+            <!-- Header -->
+            <HBox
+                    spacing="15"
+                    alignment="CENTER_LEFT"
+                    styleClass="form-header">
 
-            <Label
-                    text="Create a new task and keep track of it."
-                    styleClass="page-subtitle"/>
+                <Button
+                        text="←"
+                        onAction="#handleBack"
+                        styleClass="back-button"/>
+
+                <VBox spacing="3">
+                    <Label
+                            text="Add Todo"
+                            styleClass="page-title"/>
+
+                    <Label
+                            text="Create a new task and keep track of it."
+                            styleClass="page-subtitle"/>
+                </VBox>
+
+            </HBox>
+
+
+            <!-- Form -->
+            <VBox
+                    spacing="20"
+                    styleClass="todo-form">
+
+                <!-- Title -->
+                <VBox spacing="8">
+
+                    <Label
+                            text="Title"
+                            styleClass="field-label"/>
+
+                    <TextField
+                            fx:id="titleField"
+                            promptText="What needs to be done?"
+                            styleClass="form-field"/>
+
+                </VBox>
+
+
+                <!-- Description -->
+                <VBox spacing="8">
+
+                    <Label
+                            text="Description"
+                            styleClass="field-label"/>
+
+                    <TextArea
+                            fx:id="descriptionField"
+                            promptText="Add some details about this task..."
+                            wrapText="true"
+                            prefRowCount="5"
+                            styleClass="form-field"/>
+
+                </VBox>
+
+
+                <!-- Categories -->
+                <VBox spacing="8">
+
+                    <Label
+                            text="Categories"
+                            styleClass="field-label"/>
+
+                    <MenuButton
+                            fx:id="categoriesDropdown"
+                            text="Select categories"
+                            styleClass="categories-dropdown"
+                            maxWidth="Infinity"/>
+
+                </VBox>
+
+
+                <!-- Due Date -->
+                <VBox spacing="8">
+
+                    <Label
+                            text="Due Date"
+                            styleClass="field-label"/>
+
+                    <DatePicker
+                            fx:id="dueDateField"
+                            promptText="Select a due date"
+                            styleClass="form-field"/>
+
+                </VBox>
+
+
+                <!-- Save -->
+                <HBox
+                        alignment="CENTER_RIGHT"
+                        styleClass="form-actions">
+
+                    <Button
+                            text="Save Todo"
+                            onAction="#handleSave"
+                            styleClass="save-button"/>
+
+                </HBox>
+
+            </VBox>
+
         </VBox>
 
-    </HBox>
+    </content>
 
-
-    <!-- Form -->
-    <VBox
-            spacing="20"
-            styleClass="todo-form">
-
-        <!-- Title -->
-        <VBox spacing="8">
-            <Label
-                    text="Title"
-                    styleClass="field-label"/>
-
-            <TextField
-                    fx:id="titleField"
-                    promptText="What needs to be done?"
-                    styleClass="form-field"/>
-        </VBox>
-
-
-        <!-- Description -->
-        <VBox spacing="8">
-            <Label
-                    text="Description"
-                    styleClass="field-label"/>
-
-            <TextArea
-                    fx:id="descriptionField"
-                    promptText="Add some details about this task..."
-                    wrapText="true"
-                    prefRowCount="5"
-                    styleClass="form-field"/>
-        </VBox>
-
-
-        <!-- Due Date -->
-        <VBox spacing="8">
-            <Label
-                    text="Due Date"
-                    styleClass="field-label"/>
-
-            <DatePicker
-                    fx:id="dueDateField"
-                    promptText="Select a due date"
-                    styleClass="form-field"/>
-        </VBox>
-
-
-        <!-- Save -->
-        <HBox
-                alignment="CENTER_RIGHT"
-                styleClass="form-actions">
-
-            <Button
-                    text="Save Todo"
-                    onAction="#handleSave"
-                    styleClass="save-button"/>
-
-        </HBox>
-
-    </VBox>
-
-</VBox>
+</ScrollPane>

@@ -178,3 +178,139 @@
 .save-button:pressed {
     -fx-background-color: #4f51d8;
 }
+
+/* ================================
+   DROPDOWN POPUP
+   ================================ */
+
+/* =========================================
+   CATEGORY DROPDOWN
+   ========================================= */
+
+.categories-dropdown {
+    -fx-background-color: white;
+    -fx-background-radius: 9px;
+
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 9px;
+
+    -fx-text-fill: #64748b;
+    -fx-font-size: 14px;
+
+    -fx-padding: 0 12px;
+
+    -fx-alignment: CENTER_LEFT;
+
+    -fx-cursor: hand;
+}
+
+/* Hover */
+
+.categories-dropdown:hover {
+    -fx-background-color: #fafafa;
+    -fx-border-color: #cbd5e1;
+}
+
+/* Focus */
+
+.categories-dropdown:focused {
+    -fx-border-color: #6366f1;
+    -fx-border-width: 1.5px;
+}
+
+/* Arrow container */
+
+.categories-dropdown .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 4px 0 8px;
+}
+
+/* Arrow */
+
+.categories-dropdown .arrow {
+    -fx-background-color: #64748b;
+}
+
+
+/* =========================================
+   DROPDOWN MENU
+   ========================================= */
+/* Individual menu item */
+
+/* =========================================
+   DROPDOWN MENU
+   ========================================= */
+
+.context-menu {
+    -fx-background-color: white;
+
+    -fx-background-radius: 10px;
+
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+
+    -fx-padding: 6px;
+}
+
+
+/* Individual category */
+
+.context-menu .menu-item {
+    -fx-background-color: transparent;
+
+    -fx-padding: 10px 14px;
+
+    -fx-background-radius: 7px;
+
+    -fx-font-size: 14px;
+}
+
+
+/* Normal category text */
+
+.context-menu .menu-item .label {
+    -fx-text-fill: #334155;
+}
+
+
+/* Hover */
+
+.context-menu .menu-item:hover,
+.context-menu .menu-item:focused {
+    -fx-background-color: #f1f5f9;
+}
+
+
+/* Hover text */
+
+.context-menu .menu-item:hover .label,
+.context-menu .menu-item:focused .label {
+    -fx-text-fill: #000000;
+}
+
+
+/* =========================================
+   SELECTED CATEGORY
+   ========================================= */
+
+.context-menu .check-menu-item:checked {
+    -fx-background-color: #eef2ff;
+}
+
+
+/* Selected text */
+
+.context-menu .check-menu-item:checked .label {
+    -fx-text-fill: #4f46e5;
+    -fx-font-weight: bold;
+}
+
+
+/* Selected + hover */
+
+.context-menu .check-menu-item:checked:hover .label,
+.context-menu .check-menu-item:checked:focused .label {
+    -fx-text-fill: #000000;
+}
