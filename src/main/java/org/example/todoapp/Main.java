@@ -34,11 +34,11 @@ public class Main extends Application {
 
         if (authManager.isLoggedIn()) {
 
-            router.navigateTo(AppPage.DASHBOARD);
+            router.navigateTo(AppPage.DASHBOARD, null);
 
         } else {
 
-            router.navigateTo(AppPage.LOGIN);
+            router.navigateTo(AppPage.LOGIN, null);
         }
     }
 

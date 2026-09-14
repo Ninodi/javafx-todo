@@ -6,6 +6,7 @@ import javafx.scene.layout.VBox;
 import org.example.todoapp.database.CategoriesService;
 import org.example.todoapp.database.TodoService;
 import org.example.todoapp.model.Category;
+import org.example.todoapp.model.Todo;
 import org.example.todoapp.navigation.AppPage;
 import org.example.todoapp.navigation.AppRouter;
 
@@ -15,10 +16,20 @@ import java.util.Date;
 import java.util.List;
 
 public class AddTodoController {
-
+    public Label pageTitle;
+    public Label pageSubtitle;
+    public Button addTodoAction;
     private CategoriesService categoriesService;
     private AppRouter router;
     private TodoService todoService;
+    private Todo todo;
+    private List<String> categoryIds;
+
+    private Runnable onTodoCreated;
+
+//    public void setOnCategoryCreated(Runnable onTodoCreated) {
+//        this.onTodoCreated = onTodoCreated;
+//    }
 
     @FXML
     private TextField titleField;
@@ -52,12 +63,14 @@ public class AddTodoController {
     }
 
     private void loadCategories() {
-
         try {
-            List<Category> categories =
-                    categoriesService.getCategories();
+            List<Category> categories = categoriesService.getCategories();
 
             categoriesDropdown.getItems().clear();
+
+            List<String> selectedCategoryIds = todo != null
+                    ? todo.getCategoryIds()
+                    : List.of();
 
             for (Category category : categories) {
 
@@ -66,10 +79,14 @@ public class AddTodoController {
 
                 menuItem.setUserData(category);
 
+                // Pre-select categories belonging to this Todo
+                if (selectedCategoryIds.contains(category.getId())) {
+                    menuItem.setSelected(true);
+                }
+
                 menuItem.setOnAction(event -> {
                     updateCategoriesDropdownText();
 
-                    // Reopen the dropdown
                     javafx.application.Platform.runLater(() -> {
                         categoriesDropdown.show();
                     });
@@ -77,6 +94,8 @@ public class AddTodoController {
 
                 categoriesDropdown.getItems().add(menuItem);
             }
+
+            updateCategoriesDropdownText();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -109,7 +128,7 @@ public class AddTodoController {
 
     @FXML
     public void handleBack() {
-        router.navigateTo(AppPage.DASHBOARD);
+        router.navigateTo(AppPage.DASHBOARD, null);
     }
 
 
@@ -125,12 +144,33 @@ public class AddTodoController {
                 .map(Category::getId)
                 .toList();
 
-        todoService.createTodo(
-                titleInput,
-                descriptionInput,
-                localDate,
-                categoryIds
-        );
+        try {
+            if (todo == null) {
+                todoService.createTodo(
+                        titleInput,
+                        descriptionInput,
+                        localDate,
+                        categoryIds
+                );
+            } else {
+                // EDIT
+                todoService.updateTodo(
+                        todo.getId(),
+                        titleInput,
+                        descriptionInput,
+                        localDate,
+                        categoryIds
+                );
+            }
+
+//            if (onTodoCreated != null) {
+//                onTodoCreated.run();
+//            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         handleBack();
     }
@@ -159,5 +199,24 @@ public class AddTodoController {
                         );
 
         categoriesDropdown.setText(selectedTitles);
+    }
+
+    public List<String> getCategoryIds() {
+        return categoryIds;
+    }
+
+    public void setTodo(Todo todo) {
+        this.todo = todo;
+
+        titleField.setText(todo.getTitle());
+        descriptionField.setText(todo.getDescription());
+        dueDateField.setValue(todo.getDueDate());
+
+        if(todo != null){
+            pageTitle.setText("Update Todo");
+            pageSubtitle.setText("Update task and keep track of it.");
+            addTodoAction.setText("Update");
+        }
+        loadCategories();
     }
 }

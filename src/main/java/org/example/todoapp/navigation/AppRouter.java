@@ -9,6 +9,7 @@ import org.example.todoapp.auth.AuthManager;
 import org.example.todoapp.controller.*;
 import org.example.todoapp.database.CategoriesService;
 import org.example.todoapp.database.TodoService;
+import org.example.todoapp.model.Todo;
 
 import java.io.IOException;
 
@@ -33,6 +34,10 @@ public class AppRouter {
     }
 
     public void navigateTo(AppPage page) {
+        navigateTo(page, null);
+    }
+
+    public void navigateTo(AppPage page, Todo todo) {
 
         try {
 
@@ -42,8 +47,15 @@ public class AppRouter {
 
             Parent root = loader.load();
 
-            configureController(loader.getController());
+            Object controller = loader.getController();
 
+            configureController(controller);
+
+            if (controller instanceof AddTodoController addTodoController
+                    && todo != null) {
+
+                addTodoController.setTodo(todo);
+            }
             Scene scene = new Scene(root, 800, 600);
 
             stage.setTitle(

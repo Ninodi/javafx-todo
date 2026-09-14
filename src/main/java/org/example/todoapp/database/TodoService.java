@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.example.todoapp.auth.AuthSession;
 import org.example.todoapp.model.Todo;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -29,12 +30,13 @@ public class TodoService {
                 + "/todos";
     }
 
-    public void createTodo(
+    public void updateTodo(
+            String id,
             String title,
             String description,
             LocalDate date,
             List<String> categoryIds
-    ) throws Exception {
+    ) throws IOException, InterruptedException {
 
         String categoryIdsJson =
                 buildCategoryIdsJson(categoryIds);
@@ -85,63 +87,99 @@ public class TodoService {
                 categoryIdsJson
         );
 
-        firestoreClient.post(getTodosPath(), body);
+        firestoreClient.patch(
+                getTodosPath() + "/" + id,
+                body
+        );
     }
 
-    public void testCreateTodo()
-            throws Exception {
+
+    public void createTodo(
+            String title,
+            String description,
+            LocalDate date,
+            List<String> categoryIds
+    ) throws Exception {
+
+        String categoryIdsJson =
+                buildCategoryIdsJson(categoryIds);
+
+        String dueDateJson = "";
+
+        if (date != null) {
+
+            String formattedDate = date
+                    .atStartOfDay(ZoneOffset.UTC)
+                    .toInstant()
+                    .toString();
+
+            dueDateJson = """
+            "dueDate": {
+                "timestampValue": "%s"
+            },
+            """.formatted(formattedDate);
+        }
 
         String body = """
-            {
-              "fields": {
-                "title": {
-                  "stringValue": "Test POST Todo"
-                },
-                "description": {
-                  "stringValue": "Created using FirestoreClient"
-                },
-                "completed": {
-                  "booleanValue": false
-                }
+        {
+          "fields": {
+            "title": {
+              "stringValue": "%s"
+            },
+            "description": {
+              "stringValue": "%s"
+            },
+            %s
+            "completed": {
+              "booleanValue": false
+            },
+            "categoryIds": {
+              "arrayValue": {
+                "values": [
+                  %s
+                ]
               }
             }
-            """;
+          }
+        }
+        """.formatted(
+                title,
+                description,
+                dueDateJson,
+                categoryIdsJson
+        );
 
-        JsonNode response =
-                firestoreClient.post(
-                        getTodosPath(),
-                        body
-                );
+        System.out.println(body);
 
-        System.out.println("Created todo:");
-        System.out.println(response);
+        firestoreClient.post(
+                getTodosPath(),
+                body
+        );
     }
 
 
-    public List<Todo> getTodos()
-            throws Exception {
+    public List<Todo> getTodos() throws Exception {
 
         JsonNode response =
                 firestoreClient.get(
                         getTodosPath()
                 );
 
-        List<Todo> todos =
-                new ArrayList<>();
+        List<Todo> todos = new ArrayList<>();
 
         if (response == null) {
             return todos;
         }
 
-        JsonNode documents =
-                response.get("documents");
+        JsonNode documents = response.get("documents");
 
-        if (documents == null) {
+        if (documents == null || !documents.isArray()) {
             return todos;
         }
 
         for (JsonNode document : documents) {
 
+            // Get document ID
             String name =
                     document.get("name").asText();
 
@@ -153,27 +191,76 @@ public class TodoService {
             JsonNode fields =
                     document.get("fields");
 
+            // Title
             String title =
                     fields.get("title")
                             .get("stringValue")
                             .asText();
 
+            // Description
             String description =
                     fields.get("description")
                             .get("stringValue")
                             .asText();
 
+            // Completed
             boolean completed =
                     fields.get("completed")
                             .get("booleanValue")
                             .asBoolean();
+
+            LocalDate dueDate = null;
+
+            JsonNode dueDateNode = fields.get("dueDate");
+
+            if (dueDateNode != null
+                    && dueDateNode.has("timestampValue")) {
+
+                String timestamp =
+                        dueDateNode
+                                .get("timestampValue")
+                                .asText();
+
+                dueDate = java.time.Instant
+                        .parse(timestamp)
+                        .atZone(java.time.ZoneOffset.UTC)
+                        .toLocalDate();
+            }
+
+            // Category IDs
+            List<String> categoryIds =
+                    new ArrayList<>();
+
+            JsonNode categoryIdsNode =
+                    fields.get("categoryIds");
+
+            if (categoryIdsNode != null
+                    && categoryIdsNode.has("arrayValue")
+                    && categoryIdsNode
+                    .get("arrayValue")
+                    .has("values")) {
+
+                JsonNode values =
+                        categoryIdsNode
+                                .get("arrayValue")
+                                .get("values");
+
+                for (JsonNode value : values) {
+
+                    categoryIds.add(
+                            value.get("stringValue")
+                                    .asText()
+                    );
+                }
+            }
 
             Todo todo = new Todo(
                     id,
                     title,
                     description,
                     completed,
-                    null
+                    dueDate,
+                    categoryIds
             );
 
             todos.add(todo);
@@ -195,5 +282,9 @@ public class TodoService {
                         )
                 )
                 .collect(Collectors.joining(","));
+    }
+
+    public void deleteTodo(String todoId) {
+        System.out.println("delete" + " " + todoId);
     }
 }

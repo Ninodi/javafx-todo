@@ -3,11 +3,9 @@ package org.example.todoapp.ui;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
-import org.example.todoapp.controller.CategoryItemController;
 import org.example.todoapp.controller.DashboardController;
-import org.example.todoapp.controller.TodosController;
-import org.example.todoapp.database.CategoriesService;
-import org.example.todoapp.model.Category;
+import org.example.todoapp.controller.TodoItemController;
+import org.example.todoapp.database.TodoService;
 import org.example.todoapp.model.Todo;
 
 import java.io.IOException;
@@ -16,23 +14,23 @@ public class TodoListCell extends ListCell<Todo> {
 
     private Parent root;
 
-    private TodosController controller;
+    private TodoItemController controller;
 
-    public TodoListCell(CategoriesService categoriesService, Runnable onDelete, DashboardController dashboardController) {
+    public TodoListCell(TodoService todoService, Runnable onDelete, DashboardController dashboardController) {
         try {
 
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource(
-                            "/todoapp/ui/CategoryItem.fxml"
+                            "/todoapp/ui/TodoItem.fxml"
                     )
             );
 
             root = loader.load();
 
             controller = loader.getController();
-//            controller.setCategoriesService(categoriesService);
-//            controller.setDashboardController(dashboardController);
-//            controller.setOnDelete(onDelete);
+            controller.setTodoService(todoService);
+            controller.setDashboardController(dashboardController);
+            controller.setOnDelete(onDelete);
 
 
         } catch (IOException e) {
@@ -55,7 +53,7 @@ public class TodoListCell extends ListCell<Todo> {
 
         } else {
 
-//            controller.setCategory(category);
+            controller.setTodo(todo);
 
             setGraphic(root);
         }

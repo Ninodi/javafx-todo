@@ -72,6 +72,6 @@ public class RegisterController {
 
     @FXML
     private void handleLogin() {
-        router.navigateTo(AppPage.LOGIN);
+        router.navigateTo(AppPage.LOGIN, null);
     }
 }

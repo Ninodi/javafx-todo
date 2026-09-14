@@ -44,10 +44,12 @@
 
                 <VBox spacing="3">
                     <Label
+                            fx:id="pageTitle"
                             text="Add Todo"
                             styleClass="page-title"/>
 
                     <Label
+                            fx:id="pageSubtitle"
                             text="Create a new task and keep track of it."
                             styleClass="page-subtitle"/>
                 </VBox>
@@ -129,6 +131,7 @@
                         styleClass="form-actions">
 
                     <Button
+                            fx:id="addTodoAction"
                             text="Save Todo"
                             onAction="#handleSave"
                             styleClass="save-button"/>

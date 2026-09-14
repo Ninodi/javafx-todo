@@ -6,6 +6,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import org.example.todoapp.database.TodoService;
 import org.example.todoapp.model.Todo;
+import org.example.todoapp.ui.CategoryListCell;
+import org.example.todoapp.ui.TodoListCell;
 
 import java.util.List;
 
@@ -15,6 +17,7 @@ public class TodosController {
     private ListView<Todo> todoList;
 
     private TodoService todoService;
+    private DashboardController dashboardController;
 
     public void setTodoService(TodoService todoService) {
 
@@ -25,26 +28,18 @@ public class TodosController {
         loadTodos();
     }
 
+    public void setDashboardController(DashboardController dashboardController) {
+
+        this.dashboardController = dashboardController;
+    }
+
     private void setupTodoList() {
 
-        todoList.setCellFactory(list -> new ListCell<>() {
-
-            @Override
-            protected void updateItem(
-                    Todo todo,
-                    boolean empty
-            ) {
-
-                super.updateItem(todo, empty);
-
-                if (empty || todo == null) {
-                    setText(null);
-                } else {
-                    setText(todo.getTitle());
-                }
-            }
-        });
+        todoList.setCellFactory(
+                listView -> new TodoListCell(todoService, this::refreshTodos, dashboardController)
+        );
     }
+
 
     private void loadTodos() {
 
@@ -61,5 +56,9 @@ public class TodosController {
 
             e.printStackTrace();
         }
+    }
+
+    public void refreshTodos() {
+        loadTodos();
     }
 }

@@ -1,5 +1,6 @@
 package org.example.todoapp.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -13,6 +14,7 @@ import javafx.scene.control.Button;
 import org.example.todoapp.database.CategoriesService;
 import org.example.todoapp.database.TodoService;
 import org.example.todoapp.model.Category;
+import org.example.todoapp.model.Todo;
 import org.example.todoapp.navigation.AppPage;
 import org.example.todoapp.navigation.AppRouter;
 import java.util.List;
@@ -104,6 +106,7 @@ public class DashboardController {
                         loader.getController();
 
                 controller.setTodoService(todoService);
+                controller.setDashboardController(this);
             }
 
             if (fxml.equals("/todoapp/ui/CategoriesView.fxml")) {
@@ -137,10 +140,6 @@ public class DashboardController {
         activeButton.getStyleClass().add("active");
     }
 
-    @FXML
-    public void showAddTodoView() {
-        router.navigateTo(AppPage.ADD_TODO);
-    }
 
     @FXML
     public void openCategoryModal(Category category) {
@@ -185,5 +184,14 @@ public class DashboardController {
 
     public void setCategoriesService(CategoriesService categoriesService) {
         this.categoriesService = categoriesService;
+    }
+
+    @FXML
+    public void showAddTodoView() {
+        router.navigateTo(AppPage.ADD_TODO);
+    }
+
+    public void showAddTodoView(Todo todo) {
+        router.navigateTo(AppPage.ADD_TODO, todo);
     }
 }
