@@ -30,10 +30,12 @@
     <VBox spacing="4">
 
         <Label
+                fx:id="modalTitle"
                 text="Create Category"
                 styleClass="modal-title"/>
 
         <Label
+                fx:id="modalSubtitle"
                 text="Add a category to organize your todos."
                 styleClass="modal-subtitle"/>
 
@@ -83,6 +85,7 @@
                 styleClass="cancel-btn"/>
 
         <Button
+                fx:id="modalAction"
                 text="Create Category"
                 onAction="#handleCreate"
                 styleClass="create-btn"/>

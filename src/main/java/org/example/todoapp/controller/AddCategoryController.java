@@ -2,7 +2,9 @@ package org.example.todoapp.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -18,6 +20,15 @@ public class AddCategoryController {
     public void setOnCategoryCreated(Runnable onCategoryCreated) {
         this.onCategoryCreated = onCategoryCreated;
     }
+
+    @FXML
+    public Label modalTitle;
+
+    @FXML
+    public Label modalSubtitle;
+
+    @FXML
+    public Button modalAction;
 
     @FXML
     private TextField titleField;
@@ -71,5 +82,11 @@ public class AddCategoryController {
         this.category = category;
         titleField.setText(category.getTitle());
         colorPicker.setValue(Color.web(category.getColor()));
+
+        if(category != null){
+            modalTitle.setText("Edit Category");
+            modalSubtitle.setText("Edit category to organize todos");
+            modalAction.setText("Edit");
+        }
     }
 }
