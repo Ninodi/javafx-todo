@@ -51,7 +51,7 @@ public class TodoItemController {
     @FXML
     public void handleDelete(ActionEvent actionEvent) {
         try {
-            todoService.deleteTodo(todoId);
+            todoService.deleteTodo(todo);
             if (onDelete != null) {
                 onDelete.run();
             }

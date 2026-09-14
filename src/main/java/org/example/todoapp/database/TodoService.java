@@ -284,7 +284,14 @@ public class TodoService {
                 .collect(Collectors.joining(","));
     }
 
-    public void deleteTodo(String todoId) {
-        System.out.println("delete" + " " + todoId);
+    public void deleteTodo(Todo todo) {
+        String todoId = todo.getId();
+        try {
+            firestoreClient.delete(getTodosPath() + "/" + todoId);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
