@@ -105,6 +105,7 @@ public class DashboardController {
                 TodosController controller =
                         loader.getController();
 
+                controller.setCategoriesService(categoriesService);
                 controller.setTodoService(todoService);
                 controller.setDashboardController(this);
             }
@@ -120,7 +121,7 @@ public class DashboardController {
 
             contentArea.getChildren().setAll(view);
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

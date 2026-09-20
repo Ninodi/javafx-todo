@@ -5,9 +5,12 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.todoapp.controller.TodosController">
+            fx:controller="org.example.todoapp.controller.TodosController"
+            stylesheets="@../styles/todos.css"
+            >
 
     <ListView fx:id="todoList"
+              styleClass="todo-list"
               AnchorPane.topAnchor="20.0"
               AnchorPane.bottomAnchor="20.0"
               AnchorPane.leftAnchor="20.0"

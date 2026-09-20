@@ -25,12 +25,6 @@ public class AddTodoController {
     private Todo todo;
     private List<String> categoryIds;
 
-    private Runnable onTodoCreated;
-
-//    public void setOnCategoryCreated(Runnable onTodoCreated) {
-//        this.onTodoCreated = onTodoCreated;
-//    }
-
     @FXML
     private TextField titleField;
 
@@ -163,10 +157,6 @@ public class AddTodoController {
                 );
             }
 
-//            if (onTodoCreated != null) {
-//                onTodoCreated.run();
-//            }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -199,10 +189,6 @@ public class AddTodoController {
                         );
 
         categoriesDropdown.setText(selectedTitles);
-    }
-
-    public List<String> getCategoryIds() {
-        return categoryIds;
     }
 
     public void setTodo(Todo todo) {

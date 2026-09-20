@@ -14,7 +14,6 @@ import java.util.List;
 public class CategoriesService {
     private final FirestoreClient firestoreClient;
     private final AuthSession session;
-    private String editCategoryId;
 
     public CategoriesService(AuthSession session) {
         this.firestoreClient =
@@ -94,10 +93,6 @@ public class CategoriesService {
         firestoreClient.delete(
                 getCategoriesPath() + "/" + id
         );
-    }
-
-    public void setEditCategoryId (String editCategoryId) {
-        this.editCategoryId = editCategoryId;
     }
 
     public void updateCategory(String id, String title, String color)

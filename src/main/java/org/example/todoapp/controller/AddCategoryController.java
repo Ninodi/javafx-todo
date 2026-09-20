@@ -1,13 +1,11 @@
 package org.example.todoapp.controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import org.example.todoapp.database.CategoriesService;
 import org.example.todoapp.model.Category;
 

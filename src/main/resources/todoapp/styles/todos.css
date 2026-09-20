@@ -1,0 +1,157 @@
+.todo-list {
+    -fx-background-color: #f7f8fc;
+    -fx-background-insets: 0;
+    -fx-padding: 5px;
+}
+
+/* Remove the default ListView border */
+.todo-list {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+}
+
+/* ListView viewport */
+.todo-list .viewport {
+    -fx-background-color: #f7f8fc;
+}
+
+/* =========================
+   Todo Items
+   ========================= */
+
+.todo-list .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 6px 0;
+    -fx-border-color: transparent;
+}
+
+/* Remove default selected-cell styling */
+.todo-list .list-cell:filled:selected {
+    -fx-background-color: transparent;
+}
+
+.todo-list .list-cell:filled:selected:focused {
+    -fx-background-color: transparent;
+}
+
+/* Hover */
+.todo-list .list-cell:filled:hover {
+    -fx-background-color: transparent;
+}
+
+/* Empty cells */
+.todo-list .list-cell:empty {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* =========================
+   Scrollbar
+   ========================= */
+
+.todo-list .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-padding: 2px;
+}
+
+.todo-list .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+}
+
+.todo-list .scroll-bar:vertical .thumb {
+    -fx-background-color: #d1d5db;
+    -fx-background-radius: 10px;
+}
+
+.todo-list .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #aeb4bd;
+}
+
+.todo-list .scroll-bar:vertical .increment-button,
+.todo-list .scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.todo-list .scroll-bar:vertical .increment-arrow,
+.todo-list .scroll-bar:vertical .decrement-arrow {
+    -fx-shape: "";
+    -fx-padding: 0;
+}
+
+/* =========================
+   Todo Card
+   ========================= */
+
+.todo-card {
+    -fx-background-color: white;
+    -fx-background-radius: 14px;
+    -fx-border-color: #e8e9ed;
+    -fx-border-radius: 14px;
+    -fx-border-width: 1px;
+    -fx-padding: 16px 18px;
+}
+
+.todo-card:hover {
+    -fx-background-color: #fcfcff;
+    -fx-border-color: #d9dcff;
+}
+
+
+.delete-todo-button {
+    -fx-background-color: #ef4444;
+    -fx-background-radius: 8px;
+
+    -fx-min-width: 34px;
+    -fx-min-height: 34px;
+    -fx-pref-width: 34px;
+    -fx-pref-height: 34px;
+
+    -fx-padding: 0;
+
+    -fx-cursor: hand;
+}
+
+.edit-todo-button {
+    -fx-background-color: #fff;
+    -fx-border-color: #5558e8;
+    -fx-border-size: 1px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+
+    -fx-min-width: 34px;
+    -fx-min-height: 34px;
+    -fx-pref-width: 34px;
+    -fx-pref-height: 34px;
+
+    -fx-padding: 0;
+
+    -fx-cursor: hand;
+}
+
+
+/* Trash icon */
+.delete-todo-button .ikonli-font-icon {
+    -fx-icon-color: white;
+    -fx-icon-size: 14px;
+}
+
+
+/* Hover */
+.delete-todo-button:hover {
+    -fx-background-color: #dc2626;
+}
+
+
+/* Pressed */
+.delete-todo-button:pressed {
+    -fx-background-color: #b91c1c;
+}
+
+
+/* Keyboard focus */
+.delete-todo-button:focused {
+    -fx-border-color: #fca5a5;
+    -fx-border-width: 2px;
+    -fx-border-radius: 8px;
+}
