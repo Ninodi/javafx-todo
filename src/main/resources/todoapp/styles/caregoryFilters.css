@@ -1,0 +1,22 @@
+.category-filter-btn {
+    -fx-background-color: transparent;
+    -fx-background-radius: 7;
+    -fx-border-color: #D9D9D9;
+    -fx-border-radius: 7;
+    -fx-border-width: 1;
+
+    -fx-cursor: hand;
+}
+
+.category-filter-btn:hover {
+    -fx-background-color: #F2F2F2;
+}
+
+.category-filter-btn:pressed {
+    -fx-background-color: #E8E8E8;
+}
+
+.category-filter-btn .label {
+    -fx-text-fill: #333333;
+    -fx-font-size: 13px;
+}

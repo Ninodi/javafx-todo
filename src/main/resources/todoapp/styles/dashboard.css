@@ -178,6 +178,84 @@
     -fx-icon-color: white;
 }
 
+
+.filter-btn {
+    -fx-background-color: transparent;
+    -fx-background-radius: 7;
+    -fx-border-color: #D9D9D9;
+    -fx-border-radius: 7;
+    -fx-border-width: 1;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+    -fx-padding: 6px 10px;
+}
+
+
+
+.category-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+
+/* Category scroll container */
+.category-scroll {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.category-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Horizontal scrollbar */
+.category-scroll .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 2 0 0 0;
+    -fx-pref-height: 8px;
+}
+
+/* Scrollbar track */
+.category-scroll .scroll-bar:horizontal .track {
+    -fx-background-color: transparent;
+    -fx-background-radius: 4px;
+}
+
+/* Scrollbar thumb */
+.category-scroll .scroll-bar:horizontal .thumb {
+    -fx-background-color: #b8bec7;
+    -fx-background-radius: 4px;
+    -fx-background-insets: 0;
+}
+
+.category-scroll .scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: #8e98a6;
+}
+
+/* Hide the scrollbar arrow buttons */
+.category-scroll .scroll-bar:horizontal .increment-button,
+.category-scroll .scroll-bar:horizontal .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.category-scroll .scroll-bar:horizontal .increment-arrow,
+.category-scroll .scroll-bar:horizontal .decrement-arrow {
+    -fx-shape: "";
+    -fx-padding: 0;
+}
+
+/* Remove the corner between scrollbars */
+.category-scroll .corner {
+    -fx-background-color: transparent;
+}
+
+.filter-bar {
+    -fx-padding: 2 0 2 0;
+}
+
 .modal-overlay {
     -fx-background-color: rgba(0, 0, 0, 0.4);
 }

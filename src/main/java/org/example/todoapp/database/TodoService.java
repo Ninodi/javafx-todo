@@ -35,7 +35,8 @@ public class TodoService {
             String title,
             String description,
             LocalDate date,
-            List<String> categoryIds
+            List<String> categoryIds,
+            boolean completed
     ) throws IOException, InterruptedException {
 
         String categoryIdsJson =
@@ -44,46 +45,45 @@ public class TodoService {
         String dueDateJson = "";
 
         if (date != null) {
-
             String formattedDate = date
                     .atStartOfDay(ZoneOffset.UTC)
                     .toInstant()
                     .toString();
 
             dueDateJson = """
-                "dueDate": {
-                    "timestampValue": "%s"
-                },
-                """.formatted(formattedDate);
+            "dueDate": {
+                "timestampValue": "%s"
+            },
+            """.formatted(formattedDate);
         }
 
-
         String body = """
-            {
-              "fields": {
-                "title": {
-                  "stringValue": "%s"
-                },
-                "description": {
-                  "stringValue": "%s"
-                },
-                %s
-                "completed": {
-                  "booleanValue": false
-                },
-                "categoryIds": {
-                  "arrayValue": {
-                    "values": [
-                      %s
-                    ]
-                  }
-                }
+        {
+          "fields": {
+            "title": {
+              "stringValue": "%s"
+            },
+            "description": {
+              "stringValue": "%s"
+            },
+            %s
+            "completed": {
+              "booleanValue": %s
+            },
+            "categoryIds": {
+              "arrayValue": {
+                "values": [
+                  %s
+                ]
               }
             }
-            """.formatted(
+          }
+        }
+        """.formatted(
                 title,
                 description,
                 dueDateJson,
+                completed,
                 categoryIdsJson
         );
 
@@ -294,4 +294,6 @@ public class TodoService {
             throw new RuntimeException(e);
         }
     }
+
+
 }

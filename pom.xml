@@ -133,6 +133,11 @@
             <artifactId>dotenv-java</artifactId>
             <version>3.2.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>21.0.6</version> <!-- Use the version matching your Java version -->
+        </dependency>
     </dependencies>
 
     <build>

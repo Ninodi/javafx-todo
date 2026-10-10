@@ -4,16 +4,59 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.FlowPane?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.example.todoapp.controller.TodosController"
       stylesheets="@../styles/todos.css"
       spacing="10">
 
-    <HBox fx:id="filterBar"
-          spacing="8"
-          alignment="CENTER_LEFT"
-          styleClass="filter-bar"/>
+    <FlowPane hgap="12"
+              vgap="8"
+              alignment="CENTER_LEFT">
+
+        <!-- Static status filters -->
+        <HBox spacing="8">
+            <Button fx:id="allBtn"
+                    text="All"
+                    styleClass="filter-btn"
+                    onAction="#handleAllClick"/>
+
+            <Button fx:id="doneBtn"
+                    text="Done"
+                    styleClass="filter-btn"
+                    onAction="#handleDoneClick"/>
+
+            <Button fx:id="pendingBtn"
+                    text="Pending"
+                    styleClass="filter-btn"
+                    onAction="#handlePendingClick"/>
+        </HBox>
+
+        <Separator orientation="VERTICAL"/>
+
+        <!-- Scrollable category filters -->
+        <ScrollPane fitToHeight="true"
+                    fitToWidth="false"
+                    hbarPolicy="AS_NEEDED"
+                    vbarPolicy="NEVER"
+                    prefViewportWidth="300"
+                    prefViewportHeight="36"
+                    styleClass="category-scroll">
+
+            <content>
+                <HBox fx:id="filterBar"
+                      spacing="8"
+                      alignment="CENTER_LEFT"
+                      styleClass="filter-bar"/>
+            </content>
+
+        </ScrollPane>
+
+    </FlowPane>
 
     <ListView fx:id="todoList"
               styleClass="todo-list"

@@ -153,7 +153,8 @@ public class AddTodoController {
                         titleInput,
                         descriptionInput,
                         localDate,
-                        categoryIds
+                        categoryIds,
+                        todo.isCompleted()
                 );
             }
 

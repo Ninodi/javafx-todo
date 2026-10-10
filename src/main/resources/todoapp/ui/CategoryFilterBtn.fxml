@@ -10,7 +10,8 @@
         xmlns="http://javafx.com/javafx/21"
         xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="org.example.todoapp.controller.CategoryFilterBtnController"
-        styleClass="category-filter-btn">
+        stylesheets="@../styles/caregoryFilters.css"
+        styleClass="category-filter-btn ">
 
     <graphic>
 

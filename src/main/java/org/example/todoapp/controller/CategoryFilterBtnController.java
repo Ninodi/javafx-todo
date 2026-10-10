@@ -32,10 +32,42 @@ public class CategoryFilterBtnController {
     public void setOnClick(Runnable onClick) {
         this.onClick = onClick;
 
+
         categoryButton.setOnAction(event -> {
             if (this.onClick != null) {
                 this.onClick.run();
             }
+
         });
+    }
+
+    public void setSelected(boolean selected) {
+
+        if (selected) {
+            String color = category.getColor();
+
+            if (color.startsWith("0x")) {
+                color = "#" + color.substring(2, 8);
+            }
+
+            categoryButton.setStyle(
+                    "-fx-background-color: " + color + ";" +
+                            "-fx-border-width: 0.5px;" +
+                            "-fx-border-color: black;" +
+                            "-fx-border-radius: 5px;"
+            );
+
+            categoryCircle.setFill(Color.WHITE);
+//            categoryTitle.setTextFill(Color.WHITE);
+
+        } else {
+            categoryButton.setStyle("");
+
+            categoryCircle.setFill(
+                    Color.web(category.getColor())
+            );
+
+            categoryTitle.setTextFill(Color.BLACK);
+        }
     }
 }

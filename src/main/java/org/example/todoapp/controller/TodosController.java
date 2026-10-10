@@ -1,6 +1,7 @@
 package org.example.todoapp.controller;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -23,15 +24,32 @@ public class TodosController {
     @FXML
     private HBox filterBar;
 
+    @FXML
+    private Button allBtn;
+
+    @FXML
+    private Button doneBtn;
+
+    @FXML
+    private Button pendingBtn;
+
+
     private TodoService todoService;
     private DashboardController dashboardController;
     private CategoriesService categoriesService;
 
     private List<Category> categories;
     private List<Todo> allTodos;
+    private CategoryFilterBtnController selectedCategoryController;
+    private enum StatusFilter {
+        ALL, DONE, PENDING
+    }
+
+    private StatusFilter selectedStatus = StatusFilter.ALL;
+
+    private String selectedCategoryId;
 
     public void setTodoService(TodoService todoService) throws Exception {
-
         this.todoService = todoService;
 
         loadCategories();
@@ -39,6 +57,10 @@ public class TodosController {
 
         setupTodoList();
         setupFilterBar();
+
+        selectedStatus = StatusFilter.ALL;
+        updateStatusButtonStyles();
+        updateFilteredTodos();
     }
 
     public void setDashboardController(DashboardController dashboardController) {
@@ -67,12 +89,6 @@ public class TodosController {
 
         filterBar.getChildren().clear();
 
-        Button allButton = new Button("All");
-
-        allButton.setOnAction(event -> displayTodos(allTodos));
-
-        filterBar.getChildren().add(allButton);
-
         for (Category category : categories) {
 
             try {
@@ -89,10 +105,28 @@ public class TodosController {
                         loader.getController();
 
                 controller.setCategory(category);
+                controller.setOnClick(() -> {
 
-                controller.setOnClick(() ->
-                        filterByCategory(category.getId())
-                );
+                    // Toggle off the currently selected category
+                    if (selectedCategoryController == controller) {
+                        controller.setSelected(false);
+                        selectedCategoryController = null;
+                        selectedCategoryId = null;
+                    } else {
+
+                        // Unselect the previous category
+                        if (selectedCategoryController != null) {
+                            selectedCategoryController.setSelected(false);
+                        }
+
+                        // Select the new category
+                        controller.setSelected(true);
+                        selectedCategoryController = controller;
+                        selectedCategoryId = category.getId();
+                    }
+
+                    updateFilteredTodos();
+                });
 
                 filterBar.getChildren().add(categoryButton);
 
@@ -107,13 +141,9 @@ public class TodosController {
      * This should only happen when we actually need fresh data.
      */
     private void loadTodos() {
-
         try {
-
             allTodos = todoService.getTodos();
-
-            displayTodos(allTodos);
-
+            updateFilteredTodos();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -123,27 +153,12 @@ public class TodosController {
      * Updates what is currently displayed in the ListView.
      * Does NOT make an API call.
      */
+
     private void displayTodos(List<Todo> todos) {
 
         todoList.setItems(
                 FXCollections.observableArrayList(todos)
         );
-    }
-
-    /**
-     * Filters the already-loaded todos.
-     * Does NOT make an API call.
-     */
-    private void filterByCategory(String categoryId) {
-
-        List<Todo> filteredTodos = allTodos.stream()
-                .filter(todo ->
-                        todo.getCategoryIds() != null &&
-                                todo.getCategoryIds().contains(categoryId)
-                )
-                .toList();
-
-        displayTodos(filteredTodos);
     }
 
     /**
@@ -156,5 +171,77 @@ public class TodosController {
 
     public void loadCategories() throws Exception {
         this.categories = categoriesService.getCategories();
+    }
+
+
+
+    @FXML
+    private void handleAllClick(ActionEvent event) {
+        selectedStatus = StatusFilter.ALL;
+        displayTodos(allTodos);
+
+        updateStatusButtonStyles();
+    }
+
+    @FXML
+    private void handleDoneClick(ActionEvent event) {
+        selectedStatus = StatusFilter.DONE;
+        List<Todo> doneTodos = allTodos.stream()
+                .filter(Todo::isCompleted)
+                .toList();
+
+        displayTodos(doneTodos);
+        updateStatusButtonStyles();
+    }
+
+    @FXML
+    private void handlePendingClick(ActionEvent event) {
+        selectedStatus = StatusFilter.PENDING;
+        List<Todo> pendingTodos = allTodos.stream()
+                .filter(todo -> !todo.isCompleted())
+                .toList();
+
+        displayTodos(pendingTodos);
+        updateStatusButtonStyles();
+    }
+
+
+    private void updateFilteredTodos() {
+
+        if (allTodos == null) {
+            return;
+        }
+
+        List<Todo> filteredTodos = allTodos.stream()
+
+                // Apply the status filter
+                .filter(todo -> switch (selectedStatus) {
+                    case ALL -> true;
+                    case DONE -> todo.isCompleted();
+                    case PENDING -> !todo.isCompleted();
+                })
+
+                // Apply the category filter
+                .filter(todo ->
+                        selectedCategoryId == null ||
+                                (todo.getCategoryIds() != null &&
+                                        todo.getCategoryIds().contains(selectedCategoryId))
+                )
+
+                .toList();
+
+        displayTodos(filteredTodos);
+    }
+
+    private void updateStatusButtonStyles() {
+        allBtn.setStyle("");
+        doneBtn.setStyle("");
+        pendingBtn.setStyle("");
+
+        switch (selectedStatus) {
+            case ALL -> allBtn.setStyle("-fx-background-color: #4f51d8;" + "-fx-text-fill: white;");
+            case DONE -> doneBtn.setStyle("-fx-background-color: #4f51d8;" + "-fx-text-fill: white;");
+            case PENDING -> pendingBtn.setStyle("-fx-background-color: #4f51d8;" + "-fx-text-fill: white;");
+        }
     }
 }
